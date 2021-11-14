@@ -1,0 +1,133 @@
+<!DOCTYPE html><html lang="zh-CN" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="day-prompt" content="天前"><meta name="hour-prompt" content="小时前"><meta name="minute-prompt" content="分钟前"><meta name="justnow-prompt" content="刚刚"><meta name="generator" content="Jekyll v4.2.1" /><meta property="og:title" content="WSL2" /><meta property="og:locale" content="zh_CN" /><meta name="description" content="1. WSL2 安装和配置" /><meta property="og:description" content="1. WSL2 安装和配置" /><link rel="canonical" href="https://jim-tech.github.io/posts/wsl2/" /><meta property="og:url" content="https://jim-tech.github.io/posts/wsl2/" /><meta property="og:site_name" content="至千里!" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2021-11-13T09:55:38+08:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="WSL2" /><meta name="google-site-verification" content="google_meta_tag_verification" /> <script type="application/ld+json"> {"description":"1. WSL2 安装和配置","url":"https://jim-tech.github.io/posts/wsl2/","@type":"BlogPosting","headline":"WSL2","dateModified":"2021-11-14T19:20:11+08:00","datePublished":"2021-11-13T09:55:38+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://jim-tech.github.io/posts/wsl2/"},"@context":"https://schema.org"}</script><title>WSL2 | 至千里!</title><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><meta name="apple-mobile-web-app-title" content="至千里!"><meta name="application-name" content="至千里!"><meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magnific-popup@1.1.0/dist/magnific-popup.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column align-items-end" lang="zh-CN"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" alt="avatar" class="mx-auto"> <img src="https://cdn.jsdelivr.net/gh/cotes2020/chirpy-images/commons/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">至千里!</a></div><div class="site-subtitle font-italic">不积跬步，无以至千里</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>首页</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>分类</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>标签</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>归档</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3 unloaded"></i> <span>关于</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center"> <a href="https://github.com/Jim-tech" aria-label="github" class="order-3" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['linjing.hw','gmail.com'].join('@')" aria-label="email" class="order-4" > <i class="fas fa-envelope"></i> </a> <span class="icon-border order-2"></span> <span id="mode-toggle-wrapper" class="order-1"> <i class="mode-toggle fas fa-adjust"></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.hasMode) { if (this.isDarkMode) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.hasMode) { if (self.isDarkMode) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } self.updateMermaid(); }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } /* get the current mode on screen */ get modeStatus() { if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer) ) { return ModeToggle.DARK_MODE; } else { return ModeToggle.LIGHT_MODE; } } updateMermaid() { if (typeof mermaid !== "undefined") { let expectedTheme = (this.modeStatus === ModeToggle.DARK_MODE? "dark" : "default"); let config = { theme: expectedTheme }; /* re-render the SVG › <https://github.com/mermaid-js/mermaid/issues/311#issuecomment-332557344> */ $(".mermaid").each(function() { let svgCode = $(this).prev().children().html(); $(this).removeAttr("data-processed"); $(this).html(svgCode); }); mermaid.initialize(config); mermaid.init(undefined, ".mermaid"); } } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateMermaid(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> 首页 </a> </span> <span>WSL2</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> 文章</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="搜索..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >取消</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>WSL2</h1><div class="post-meta text-muted d-flex flex-column"><div> <span class="semi-bold"> 积木 </span> 发表于 <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="2021-11-13, 09:55 +0800" >11-13<i class="unloaded">2021-11-13T09:55:38+08:00</i> </span></div><div> <span> 更新于 <span class="timeago lastmod" data-toggle="tooltip" data-placement="bottom" title="2021-11-14, 19:20 +0800" >11-14<i class="unloaded">2021-11-14T19:20:11+08:00</i> </span> </span> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="1042 字">5 分钟阅读</span></div></div><div class="post-content"><h1 id="1-wsl2-安装和配置">1. WSL2 安装和配置</h1><p>之所以开始折腾WSL2，是因为再也无法忍受在Windows 10上令人崩溃的开发效率了。Simplicity Studio这类基于开源软件的工具的通病是在Windows平台上的性能都不理想。以编译homekit_lightbulb_dmp这个sample为例，Linux平台上大约耗时不到3min，在windows 10上居然可以消耗15min。另外在Linux平台上命令行编译只需要59s。这个是促使我把Simplicity Studio迁移到Linux的原因。奈何工作电脑仍然是Windows 10的系统，最佳的办法是使用WSL2.</p><h2 id="11-安装wsl2">1.1. 安装WSL2</h2><ol><li>通过命令<code class="language-plaintext highlighter-rouge">winver</code>确认版本，要求版本2004以上。<li>通过<code class="language-plaintext highlighter-rouge">settings</code>找到<code class="language-plaintext highlighter-rouge">Turn Windows Features on or off</code>, 勾选以下插件：<ul><li>Virtual Machine Platform<li>Windows Subsystem for Linux</ul><p>确认之后需要重启。</p><li>在windows商店中安装ubuntu 20.04，安装完成后直接运行。第一次运行时需要设置用户名和密码。</ol><h2 id="12-基本操作">1.2. 基本操作</h2><ol><li>配置windows terminal，比直接运行Ubuntu的terminal好用。<li>通过<code class="language-plaintext highlighter-rouge">\\wsl$</code>来访问WSL2的文件系统，其实际路径是<code class="language-plaintext highlighter-rouge">C:\Users\&lt;username&gt;\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu20.04onWindows_xxx\LocalState</code><li>常用命令：<ul><li>wsl –shutdown<li>wsl –list -v</ul></ol><h2 id="13-配置图形化界面">1.3. 配置图形化界面</h2><h3 id="131-xrdp">1.3.1. XRDP</h3><div lang="plaintext" class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre>sudo apt update
+
+# 注意安装过程中选择lightdm
+sudo apt install -y xfce4 xrdp
+
+sudo dpkg-reconfigure lightdm
+</pre></table></code></div></div><div lang="plaintext" class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre>$ sudo vim /etc/xrdp/xrdp.ini
+# 修改下面这一行,将默认的3389改成其他端口即可
+port=3390
+</pre></table></code></div></div><div lang="plaintext" class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>$ vim ~/.xsession
+
+# 写入下面内容(就一行)
+xfce4-session
+</pre></table></code></div></div><p>运行mstsc，输入IP和端口<br /> e.g 1.1.1.1:3390</p><h2 id="14-挂在virtualbox的虚拟硬盘">1.4. 挂在VirtualBox的虚拟硬盘</h2><p>WSL2中运行GUI程序有一些操作不是很完善，例如Simplicity Studio 5的登陆界面会一直报错，这样会导致无法安装SDK。解决的办法是用virtualBox安装一个虚拟机，在虚拟机内进行这些操作，完成后将硬盘共享给WSL。之所以不直接使用虚拟机，主要是因为WSL2还是比虚拟机快。在非必要的时候，仍然可以使用WSL。</p><ol><li>安装virtualbox.<div lang="plaintext" class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>sudo apt install virtualbox
+</pre></table></code></div></div><li>修改<code class="language-plaintext highlighter-rouge">/etc/fuse.conf</code>，将<code class="language-plaintext highlighter-rouge">allow other</code>前面的注释去掉。<li>挂在virtualbox的虚拟硬盘。<div lang="plaintext" class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>vboximg-mount --image "/mnt/c/Users/&lt;username&gt;/VirtualBox VMs/Ubuntu20.04/Ubuntu20.04.vdi" --rw --root /home/&lt;user&gt;/mnt
+
+sudo mount /home/&lt;user&gt;/vol1 /home/&lt;user&gt;/vbox
+
+</pre></table></code></div></div></ol><h2 id="15-安装simplicity-studio-5">1.5. 安装Simplicity Studio 5</h2><ol><li>直接访问在虚拟硬盘中安装好的Simplicity Studio文件夹，运行studio的安装程序。<div lang="plaintext" class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre>sudo dpkg --add-architecture i386
+sudo apt update
+sudo ./setup.sh
+</pre></table></code></div></div></ol><h2 id="16-配置保存">1.6. 配置保存</h2><p>建议直接将如下的配置保存在<code class="language-plaintext highlighter-rouge">/home/&lt;user&gt;/.bashrc</code>末尾：</p><div lang="plaintext" class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre><td class="rouge-code"><pre>export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
+export LIBGL_ALWAYS_INDIRECT=1
+
+if [ ! -f /mnt/wsl/__xxtestxx__ ]; then
+	/etc/init.d/dbus start &amp;&gt; /dev/null
+	vboximg-mount --image "/mnt/c/Users/&lt;username&gt;/VirtualBox VMs/Ubuntu20.04/Ubuntu20.04.vdi" --rw --root /home/&lt;user&gt;/mnt
+	sudo mount /home/&lt;user&gt;/mnt/vol1 /home/&lt;user&gt;/vbox
+	echo "Hello World!"	
+	sudo echo 1 &gt; /mnt/wsl/__xxtestxx__
+fi
+
+
+export ARM_GNU_DIR=/home/&lt;user&gt;/SSv5/developer/toolchains/gnu_arm/10.2_2020q4
+export PATH=$PATH:/home/&lt;user&gt;/SSv5/developer/toolchains/gnu_arm/10.2_2020q4/bin
+export PATH=$PATH:/home/&lt;user&gt;/SSv5/developer/adapter_packs/commander
+
+
+export https_proxy="http://$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):10809"
+export http_proxy="http://$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):10809"
+
+</pre></table></code></div></div><p><br /></p><h1 id="2-usb-访问">2. USB 访问</h1><p>参考这篇文章<a href="https://devblogs.microsoft.com/commandline/connecting-usb-devices-to-wsl/">Connecting USB devices to WSL</a></p><ol><li>Windows上安装<a href="https://github.com/dorssel/usbipd-win/releases">usbipd-win</a>.<li>升级WSL2内核。</ol><h2 id="21-升级wsl的内核">2.1. 升级WSL的内核</h2><p>WSL的内核是Microsoft提供的，可以在 https://github.com/microsoft/WSL2-Linux-Kernel 这里获取。从<a href="https://github.com/microsoft/WSL2-Linux-Kernel/releases">release</a>描述中可以看到，5.10.60.1版本开始支持USB over IP，因此可以直接下载这个版本。</p><ol><li>下载内核代码。</ol><div lang="plaintext" class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>wget https://github.com/microsoft/WSL2-Linux-Kernel/archive/refs/tags/linux-msft-wsl-5.10.60.1.tar.gz
+</pre></table></code></div></div><ol><li>安装必要的依赖</ol><div lang="plaintext" class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>sudo apt install build-essential flex bison libssl-dev libelf-dev
+</pre></table></code></div></div><ol><li>解压内核代码，并切换到该目录，开始编译</ol><div lang="plaintext" class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre>cp Microsoft/config-wsl .config
+
+make -j8
+
+make modules -j8
+
+make modules_install -j8
+
+make install -j8
+</pre></table></code></div></div><ol><li><p>替换内核。</p><p>编译生成的内核是<code class="language-plaintext highlighter-rouge">arch/x86/boot/bzImage</code>，需要用其替换<code class="language-plaintext highlighter-rouge">C:\WINDOWS\System32\lxss\tools\kernel</code>这个文件。请注意提前备份。 替换后，用<code class="language-plaintext highlighter-rouge">wsl --shutdown</code>关闭wsl，然后重新启动，用命令<code class="language-plaintext highlighter-rouge">uname -r</code>检查版本。</p><li><p>编译USBIP这个工具</p></ol><div lang="plaintext" class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre>cd tools/usb/usbip
+
+sudo ./autogen.sh
+
+sudo ./configure
+
+sudo make install -j8
+
+sudo cp libsrc/.libs/libusbip.so.0 /lib/libusbip.so.0
+</pre></table></code></div></div><h2 id="22-使用usbipd">2.2. 使用USBIPD</h2><h3 id="221-windows">2.2.1. Windows</h3><p>用管理员权限，运行powershell</p><div lang="plaintext" class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>usbipd wsl list
+
+usbipd wsl attach --busid 1-3
+
+usbipd wsl detach --busid 1-3
+</pre></table></code></div></div><h1 id="3-遗留问题">3. 遗留问题</h1><ul class="task-list"><li class="task-list-item" hide-bullet><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />对vdi磁盘上的文件修改没有保存下来<li class="task-list-item" hide-bullet><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />USB只有串口能用</ul></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/tools/'>Tools</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/linux/" class="post-tag no-text-decoration" >Linux</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> 本文由作者按照 <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> 进行授权</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">分享</span> <span class="share-icons"> <i class="fa-fw fas fa-link small" onclick="copyLink('', '链接已复制！')" data-toggle="tooltip" data-placement="top" title="分享链接"> </i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>最近更新</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/wsl2/">WSL2</a><li><a href="/posts/ccache/">使用ccache来提高Simplicity Studio编译效率</a><li><a href="/posts/ToDo/">My ToDo List</a><li><a href="/posts/Vim/">My Vim notes</a><li><a href="/posts/vscode/">vscode notes</a></ul></div><div id="access-tags"> <span>热门标签</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/ccache/">ccache</a> <a class="post-tag" href="/tags/linux/">Linux</a> <a class="post-tag" href="/tags/plan/">plan</a> <a class="post-tag" href="/tags/tmux/">tmux</a> <a class="post-tag" href="/tags/vim/">vim</a> <a class="post-tag" href="/tags/vscode/">vscode</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">文章内容</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>相关文章</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/tmux/"><div class="card-body"> <span class="timeago small" >09-02<i class="unloaded">2021-09-02T21:43:05+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Tmux notes</h3><div class="text-muted small"><p> 1. 安装 https://github.com/gpakosz/.tmux 2. 会话 命令 说明 tmux new -s &lt;session-name&gt; 创建会话 tmux ls 查看会话 tmux l...</p></div></div></a></div><div class="card"> <a href="/posts/vscode/"><div class="card-body"> <span class="timeago small" >09-02<i class="unloaded">2021-09-02T21:43:05+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>vscode notes</h3><div class="text-muted small"><p> 1. 好用的Extension Remote系列 Remote SSH Remote WSL Remote Containers Git Git Graph GitLens ProgrammingL C/C++ Python ...</p></div></div></a></div><div class="card"> <a href="/posts/ccache/"><div class="card-body"> <span class="timeago small" >09-10<i class="unloaded">2021-09-10T23:50:38+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>使用ccache来提高Simplicity Studio编译效率</h3><div class="text-muted small"><p> 1. ccache 简介 ccache是compiler cache的缩写，官网 https://ccache.dev/ 。其主要原理是将编译过的文件缓存在文件系统中。后续编译的时候，优先从cache中查找内容一致的文件，如果命中，就直接使用相应的目标文件。对于Simplicity Studio这样大部分情况都是编译SDK的场景，非常有用。 2. 安装 从 https://ccache...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/ccache/" class="btn btn-outline-primary" prompt="上一篇"><p>使用ccache来提高Simplicity Studio编译效率</p></a> <span class="btn btn-outline-primary disabled" prompt="下一篇"><p>-</p></span></div></div></div></div><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2021 <a href="https://github.com/Jim-tech">积木</a>. <span data-toggle="tooltip" data-placement="top" title="除非另有说明，本网站上的博客文章均由作者按照知识共享署名 4.0 国际 (CC BY 4.0) 许可协议进行授权。">保留部分权利。</span></p></div><div class="footer-right"><p class="mb-0"> 本站由 <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> 生成，采用 <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> 主题。</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">热门标签</h4><a class="post-tag" href="/tags/ccache/">ccache</a> <a class="post-tag" href="/tags/linux/">Linux</a> <a class="post-tag" href="/tags/plan/">plan</a> <a class="post-tag" href="/tags/tmux/">tmux</a> <a class="post-tag" href="/tags/vim/">vim</a> <a class="post-tag" href="/tags/vscode/">vscode</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://jim-tech.github.io{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">搜索结果为空</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script> <script src="https://cdn.jsdelivr.net/combine/npm/lozad/dist/lozad.min.js,npm/magnific-popup@1/dist/jquery.magnific-popup.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.16.1,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script defer src="/app.js"></script> <script defer src="https://www.googletagmanager.com/gtag/js?id=G-Y3QX2Y2Z9B"></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-Y3QX2Y2Z9B'); }); </script>
